@@ -13,13 +13,13 @@
     <url>http://taylor.training/</url>
 
     <properties>
-        <spring.version>5.3.27</spring.version> <!-- Updated for Java 17 compatibility -->
+        <spring.version>5.3.28</spring.version> <!-- Latest compatible Spring version for Java 17 -->
         <java.version>17</java.version>
-        <junit.version>5.10.0</junit.version> <!-- Migrated to JUnit 5 -->
-        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version> <!-- Ensures Java 17 support -->
-        <maven.surefire.plugin.version>3.0.0</maven.surefire.plugin.version>
-        <slf4j.version>2.0.9</slf4j.version> <!-- SLF4J updated for compatibility -->
-        <logback.version>1.4.11</logback.version> <!-- Logback updated for compatibility -->
+        <junit.version>5.10.0</junit.version> <!-- JUnit 5 for testing -->
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version> <!-- Supports Java 17 -->
+        <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version> <!-- Testing plugin -->
+        <slf4j.version>2.0.9</slf4j.version>
+        <logback.version>1.4.11</logback.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -51,7 +51,13 @@
             <!-- JUnit 5 -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -73,6 +79,7 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!-- Maven Compiler Plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -82,10 +89,17 @@
                         <target>${java.version}</target>
                     </configuration>
                 </plugin>
+
+                <!-- Maven Surefire Plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.plugin.version}</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -101,6 +115,7 @@
         </plugins>
     </reporting>
 </project>
+
 
 
 
